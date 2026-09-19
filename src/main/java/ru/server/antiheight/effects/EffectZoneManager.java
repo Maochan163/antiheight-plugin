@@ -54,7 +54,16 @@ public class EffectZoneManager {
                 String world = zc.getString("world", "world");
                 int minY = zc.getInt("min-y", 0);
                 int maxY = zc.getInt("max-y", 320);
-                String immunityItem = zc.getString("immunity-item", "none");
+
+                // Поддерживаем и старый формат "immunity-item: xxx" (одна строка),
+                // и новый "immunity-items: [xxx, yyy]" (список) — чтобы не ломать
+                // уже настроенные конфиги.
+                List<String> immunityItems = new ArrayList<>();
+                if (zc.isList("immunity-items")) {
+                    immunityItems.addAll(zc.getStringList("immunity-items"));
+                } else if (zc.isString("immunity-item")) {
+                    immunityItems.add(zc.getString("immunity-item"));
+                }
 
                 List<PotionEffect> effects = new ArrayList<>();
                 List<?> rawEffects = zc.getList("effects");
@@ -78,7 +87,7 @@ public class EffectZoneManager {
                     }
                 }
 
-                loaded.add(new EffectZone(zoneId, enabled, world, minY, maxY, immunityItem, effects));
+                loaded.add(new EffectZone(zoneId, enabled, world, minY, maxY, immunityItems, effects));
             }
         }
 
@@ -109,7 +118,7 @@ public class EffectZoneManager {
             for (EffectZone zone : zones) {
                 if (!zone.matches(worldName, y)) continue;
 
-                if (hasImmunity(player, zone.getImmunityItem())) continue;
+                if (hasImmunity(player, zone.getImmunityItems())) continue;
 
                 for (PotionEffect effect : zone.getEffects()) {
                     player.addPotionEffect(effect);
@@ -118,12 +127,16 @@ public class EffectZoneManager {
         }
     }
 
-    private boolean hasImmunity(Player player, String immunityItemId) {
-        if (immunityItemId == null || immunityItemId.equalsIgnoreCase("none")) {
+    private boolean hasImmunity(Player player, List<String> immunityItemIds) {
+        if (immunityItemIds == null || immunityItemIds.isEmpty()) {
             return false;
         }
         ItemStack helmet = player.getInventory().getHelmet();
-        return itemFactory.isCustomItem(helmet, immunityItemId);
+        String helmetId = itemFactory.getCustomItemId(helmet);
+        if (helmetId == null) {
+            return false;
+        }
+        return immunityItemIds.contains(helmetId);
     }
 
     public int getZoneCount() {
