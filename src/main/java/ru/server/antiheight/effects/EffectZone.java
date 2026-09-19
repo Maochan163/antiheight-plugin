@@ -11,17 +11,17 @@ public class EffectZone {
     private final String world;
     private final int minY;
     private final int maxY;
-    private final String immunityItem; // configId предмета-иммунитета, или "none"
+    private final List<String> immunityItems; // configId предметов-иммунитетов; любой из списка снимает эффект
     private final List<PotionEffect> effects;
 
     public EffectZone(String id, boolean enabled, String world, int minY, int maxY,
-                       String immunityItem, List<PotionEffect> effects) {
+                       List<String> immunityItems, List<PotionEffect> effects) {
         this.id = id;
         this.enabled = enabled;
         this.world = world;
         this.minY = minY;
         this.maxY = maxY;
-        this.immunityItem = immunityItem;
+        this.immunityItems = immunityItems;
         this.effects = effects;
     }
 
@@ -33,8 +33,8 @@ public class EffectZone {
         return id;
     }
 
-    public String getImmunityItem() {
-        return immunityItem;
+    public List<String> getImmunityItems() {
+        return immunityItems;
     }
 
     public List<PotionEffect> getEffects() {
