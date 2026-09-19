@@ -1,0 +1,26 @@
+name: AntiHeight
+version: '1.0.0'
+main: ru.server.antiheight.AntiHeightPlugin
+api-version: '1.21'
+author: Claude
+description: Система эффектов по высоте/миру с масками-исключениями + незерский шлем
+
+commands:
+  antiheight:
+    description: Управление плагином AntiHeight
+    aliases: [ah]
+    permission: antiheight.admin
+  givemask:
+    description: Выдать маску от высоты
+    permission: antiheight.admin
+  givenetherhelmet:
+    description: Выдать незерский шлем
+    permission: antiheight.admin
+
+permissions:
+  antiheight.admin:
+    description: Доступ к админ-командам плагина
+    default: op
+  antiheight.exempt:
+    description: Полный иммунитет к эффектам плагина
+    default: false
