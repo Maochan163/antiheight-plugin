@@ -9,7 +9,7 @@ import ru.server.antiheight.items.CustomItemFactory;
 
 /**
  * ВРЕМЕННО УПРОЩЁННЫЙ рецепт для диагностики — весь верхний ряд:
- * факел, печь, факел.
+ * факел, БЕДРОК (вместо печи, которая почему-то не матчится), факел.
  */
 public class NetherHelmetRecipe {
 
@@ -21,9 +21,9 @@ public class NetherHelmetRecipe {
 
         recipe.shape("RFR", "   ", "   ");
         recipe.setIngredient('R', Material.REDSTONE_TORCH);
-        recipe.setIngredient('F', Material.FURNACE);
+        recipe.setIngredient('F', Material.BEDROCK);
 
         plugin.getServer().addRecipe(recipe);
-        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: факел-печь-факел).");
+        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: факел-бедрок-факел).");
     }
 }
