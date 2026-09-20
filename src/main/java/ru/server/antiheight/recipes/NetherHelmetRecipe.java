@@ -8,8 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.server.antiheight.items.CustomItemFactory;
 
 /**
- * ВРЕМЕННО УПРОЩЁННЫЙ рецепт для диагностики — только редстоун-факелы
- * по бокам верхнего ряда, остальное пусто.
+ * ВРЕМЕННО УПРОЩЁННЫЙ рецепт для диагностики — весь верхний ряд:
+ * факел, печь, факел.
  */
 public class NetherHelmetRecipe {
 
@@ -19,10 +19,11 @@ public class NetherHelmetRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "nether_helmet_craft");
         ShapedRecipe recipe = new ShapedRecipe(key, result);
 
-        recipe.shape("R R", "   ", "   ");
+        recipe.shape("RFR", "   ", "   ");
         recipe.setIngredient('R', Material.REDSTONE_TORCH);
+        recipe.setIngredient('F', Material.FURNACE);
 
         plugin.getServer().addRecipe(recipe);
-        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: только факелы).");
+        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: факел-печь-факел).");
     }
 }
