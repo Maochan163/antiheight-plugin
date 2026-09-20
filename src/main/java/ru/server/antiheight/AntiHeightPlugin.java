@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.server.antiheight.commands.AdminCommand;
 import ru.server.antiheight.effects.EffectZoneManager;
 import ru.server.antiheight.items.CustomItemFactory;
+import ru.server.antiheight.listeners.AutoMaskListener;
 import ru.server.antiheight.recipes.NetherHelmetRecipe;
 
 public class AntiHeightPlugin extends JavaPlugin {
@@ -36,6 +37,9 @@ public class AntiHeightPlugin extends JavaPlugin {
         getCommand("antiheight").setExecutor(adminCommand);
         getCommand("givemask").setExecutor(adminCommand);
         getCommand("givenetherhelmet").setExecutor(adminCommand);
+
+        // Автозамена обычной головы игрока на маску от высоты
+        getServer().getPluginManager().registerEvents(new AutoMaskListener(itemFactory), this);
 
         getLogger().info("AntiHeight включен. Зон эффектов загружено: " + zoneManager.getZoneCount());
     }
