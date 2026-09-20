@@ -3,7 +3,6 @@ package ru.server.antiheight.recipes;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.server.antiheight.items.CustomItemFactory;
@@ -29,10 +28,9 @@ public class NetherHelmetRecipe {
         recipe.setIngredient('R', Material.REDSTONE_TORCH);
         recipe.setIngredient('F', Material.FURNACE);
         recipe.setIngredient('C', Material.RESIN_CLUMP);
-        // Голова: любая player_head (ванильная ИЛИ кастомная маска — обе используют PLAYER_HEAD).
-        // Проверку "именно ли это наша маска" сюда не добавляем, т.к. владелец подтвердил:
-        // подходит любая обычная голова игрока.
-        recipe.setIngredient('H', new RecipeChoice.MaterialChoice(Material.PLAYER_HEAD));
+        // ВРЕМЕННО для диагностики: булыжник вместо головы игрока.
+        // Если крафт заработает с булыжником — значит проблема была именно в PLAYER_HEAD.
+        recipe.setIngredient('H', Material.COBBLESTONE);
         recipe.setIngredient('I', Material.BLUE_ICE);
         recipe.setIngredient('W', Material.WET_SPONGE);
 
