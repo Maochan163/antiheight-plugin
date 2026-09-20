@@ -8,14 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import ru.server.antiheight.items.CustomItemFactory;
 
 /**
- * Крафт незерского шлема на верстаке.
- *
- * Схема (по макету от владельца):
- *   [Redstone Torch] [Furnace]     [Redstone Torch]
- *   [Resin Clump]    [Player Head] [Resin Clump]
- *   [Blue Ice]        [Wet Sponge] [Blue Ice]
- *
- * ВРЕМЕННО: голова игрока заменена на булыжник для диагностики.
+ * ВРЕМЕННО УПРОЩЁННЫЙ рецепт для диагностики — только редстоун-факелы
+ * по бокам верхнего ряда, остальное пусто.
  */
 public class NetherHelmetRecipe {
 
@@ -25,16 +19,10 @@ public class NetherHelmetRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "nether_helmet_craft");
         ShapedRecipe recipe = new ShapedRecipe(key, result);
 
-        recipe.shape("RFR", "CHC", "IWI");
-
+        recipe.shape("R R", "   ", "   ");
         recipe.setIngredient('R', Material.REDSTONE_TORCH);
-        recipe.setIngredient('F', Material.FURNACE);
-        recipe.setIngredient('C', Material.RESIN_CLUMP);
-        recipe.setIngredient('H', Material.COBBLESTONE); // ВРЕМЕННО вместо PLAYER_HEAD
-        recipe.setIngredient('I', Material.BLUE_ICE);
-        recipe.setIngredient('W', Material.WET_SPONGE);
 
         plugin.getServer().addRecipe(recipe);
-        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: булыжник вместо головы).");
+        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: только факелы).");
     }
 }
