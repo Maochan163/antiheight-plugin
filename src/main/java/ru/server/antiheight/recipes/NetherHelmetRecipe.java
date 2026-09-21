@@ -3,14 +3,17 @@ package ru.server.antiheight.recipes;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.server.antiheight.items.CustomItemFactory;
 
 /**
- * ТЕСТ №2: печь через RecipeChoice.MaterialChoice вместо прямого
- * setIngredient(char, Material) — проверяем, матчится ли так.
+ * Крафт незерского шлема на верстаке.
+ *
+ * Схема (по макету от владельца):
+ *   [Redstone Torch] [Blast Furnace] [Redstone Torch]
+ *   [Resin Clump]    [Player Head]   [Resin Clump]
+ *   [Blue Ice]       [Wet Sponge]    [Blue Ice]
  */
 public class NetherHelmetRecipe {
 
@@ -20,11 +23,16 @@ public class NetherHelmetRecipe {
         NamespacedKey key = new NamespacedKey(plugin, "nether_helmet_craft");
         ShapedRecipe recipe = new ShapedRecipe(key, result);
 
-        recipe.shape("RFR", "   ", "   ");
+        recipe.shape("RFR", "CHC", "IWI");
+
         recipe.setIngredient('R', Material.REDSTONE_TORCH);
-        recipe.setIngredient('F', new RecipeChoice.MaterialChoice(Material.FURNACE));
+        recipe.setIngredient('F', Material.BLAST_FURNACE);
+        recipe.setIngredient('C', Material.RESIN_CLUMP);
+        recipe.setIngredient('H', Material.PLAYER_HEAD);
+        recipe.setIngredient('I', Material.BLUE_ICE);
+        recipe.setIngredient('W', Material.WET_SPONGE);
 
         plugin.getServer().addRecipe(recipe);
-        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: факел-печь(MaterialChoice)-факел).");
+        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован.");
     }
 }
