@@ -52,7 +52,7 @@ public class CustomItemFactory {
         SkullMeta meta = (SkullMeta) item.getItemMeta();
 
         if (textureValue != null && !textureValue.isBlank()) {
-            applyTexture(meta, textureValue);
+            applyTexture(meta, textureValue, configId);
         }
 
         meta.displayName(
@@ -86,10 +86,20 @@ public class CustomItemFactory {
     /**
      * Применяет base64 texture value (формат Mojang textures API,
      * как на minecraft-heads.com) к голове через PlayerProfile.
+     *
+     * ВАЖНО: используем ФИКСИРОВАННЫЙ UUID, детерминированно выведенный
+     * из configId, а не случайный. Со случайным UUID каждый заспавненный
+     * предмет получал новый "профиль", из-за чего клиент Minecraft не мог
+     * стабильно закешировать текстуру и голова иногда рендерилась пустой
+     * или чёрной (особенно при первом взгляде, до подтверждения текстуры
+     * через session server). Один и тот же UUID для одного и того же
+     * configId — текстура кешируется один раз и работает стабильно.
      */
-    private void applyTexture(SkullMeta meta, String base64Texture) {
+    private void applyTexture(SkullMeta meta, String base64Texture, String configId) {
         try {
-            PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID(), null);
+            UUID fixedUuid = UUID.nameUUIDFromBytes(
+                    ("antiheight-item:" + configId).getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            PlayerProfile profile = Bukkit.createProfile(fixedUuid, null);
             profile.setProperty(new com.destroystokyo.paper.profile.ProfileProperty(
                     "textures", base64Texture));
             meta.setPlayerProfile(profile);
