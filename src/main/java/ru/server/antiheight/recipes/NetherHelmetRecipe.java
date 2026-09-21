@@ -3,13 +3,14 @@ package ru.server.antiheight.recipes;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import ru.server.antiheight.items.CustomItemFactory;
 
 /**
- * ВРЕМЕННО УПРОЩЁННЫЙ рецепт для диагностики — весь верхний ряд:
- * факел, БЕДРОК (вместо печи, которая почему-то не матчится), факел.
+ * ТЕСТ №2: печь через RecipeChoice.MaterialChoice вместо прямого
+ * setIngredient(char, Material) — проверяем, матчится ли так.
  */
 public class NetherHelmetRecipe {
 
@@ -21,9 +22,9 @@ public class NetherHelmetRecipe {
 
         recipe.shape("RFR", "   ", "   ");
         recipe.setIngredient('R', Material.REDSTONE_TORCH);
-        recipe.setIngredient('F', Material.BEDROCK);
+        recipe.setIngredient('F', new RecipeChoice.MaterialChoice(Material.FURNACE));
 
         plugin.getServer().addRecipe(recipe);
-        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: факел-бедрок-факел).");
+        plugin.getLogger().info("Рецепт незерского шлема зарегистрирован (ТЕСТ: факел-печь(MaterialChoice)-факел).");
     }
 }
